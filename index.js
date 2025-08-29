@@ -21,3 +21,27 @@ const spinnerSearchEl = document.querySelector(".spinner--search");
 const spinnerJobDetailsEl = document.querySelector(".spinner--job-details");
 
 // SEARCH COMPONENT
+
+const submithandler = event =>{
+    event.preventDefault();
+
+    //GET SEARCH TEXT
+    const searchText = searchInputEl.value;
+
+    // CHECK TEXT
+    const forbiddenPattern = /<script>/;
+    const patternMatch = forbiddenPattern.test(searchText);
+
+    //CHECK
+    if(patternMatch){
+        errorTextEl.textContent = 'Your search should not be <script> !';
+        errorEl.classList.add('error--visible');
+        setTimeout(() => {
+            errorEl.classList.remove('error--visible');
+        }, 4000);
+    }else{
+
+    };
+};
+
+searchFormEl.addEventListener('submit' , submithandler);
