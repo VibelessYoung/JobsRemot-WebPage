@@ -29,19 +29,30 @@ const submithandler = event =>{
     const searchText = searchInputEl.value;
 
     // CHECK TEXT
-    const forbiddenPattern = /<script>/;
+    const forbiddenPattern = /[0-9]/;
     const patternMatch = forbiddenPattern.test(searchText);
 
     //CHECK
     if(patternMatch){
-        errorTextEl.textContent = 'Your search should not be <script> !';
+        errorTextEl.textContent = 'Your search should not be numbers !';
         errorEl.classList.add('error--visible');
         setTimeout(() => {
             errorEl.classList.remove('error--visible');
-        }, 4000);
-    }else{
+        }, 3000);
+    }
 
-    };
+    searchInputEl.blur();
+    spinnerSearchEl.classList.add('spinner--visible');
+
 };
+
+fetch("data.json")
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.error("مشکل در خواندن فایل JSON:", error);
+  });
 
 searchFormEl.addEventListener('submit' , submithandler);
