@@ -92,3 +92,16 @@ const submithandler = event =>{
         .catch(error => console.log(error));
 };
 searchFormEl.addEventListener('submit' , submithandler);
+
+const clickhandler = event =>{
+    event.preventDefault();
+    const jobItemEL = event.target.closest('.job-item');
+
+    const activeItems = document.querySelector('.job-item--active');
+    if(activeItems){
+        activeItems.classList.remove('job-item--active');
+    }
+    jobItemEL.classList.add('job-item--active');
+};
+
+jobListSearchEl.addEventListener('click' , clickhandler);
