@@ -61,7 +61,6 @@ const submithandler = event =>{
             // job items
             const { jobItems } = data;
             numberEl.textContent = jobItems.length;
-            console.log(data);
             spinnerSearchEl.classList.remove('spinner--visible');
             spinnerSearchEl.classList.add('spinner--hidden');
 
@@ -102,6 +101,23 @@ const clickhandler = event =>{
         activeItems.classList.remove('job-item--active');
     }
     jobItemEL.classList.add('job-item--active');
+
+    jobDetailsContentEl.innerHTML = '';
+    spinnerJobDetailsEl.classList.add('spinner--visible');
+
+    const jobId = jobItemEL.children[0].getAttribute('href');
+    fetch('https://bytegrad.com/course-assets/js/2/api/jobs/'+jobId)
+    .then(response => {
+        if(!response.ok){
+            console.log('Wrong');
+            return;
+        }   
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+    })
+    .catch(err => console.log(err));
 };
 
 jobListSearchEl.addEventListener('click' , clickhandler);
