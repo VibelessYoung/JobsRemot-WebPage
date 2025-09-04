@@ -22,6 +22,7 @@ const submitHandler = event => {
         setTimeout(() => {
             errorEl.classList.remove('error--visible');
         }, 3000);
+        return;
     }
 
     searchInputEl.blur();
