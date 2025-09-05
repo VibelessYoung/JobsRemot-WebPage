@@ -1,13 +1,13 @@
-import{
-    errorEL,
-    errorTextEL
+import {
+    errorEl,
+    errorTextEl
 } from '../common.js';
 
 const renderError = message => {
-    errorTextEL.textcontent = message;
-    errorEL.classlist.add('error--visible');
+    errorTextEl.textContent = message;
+    errorEl.classList.add('error--visible');
     setTimeout(() => {
-        error.classlist.remove('error--visible');
+        errorEl.classList.remove('error--visible');
     }, 4000);
 };
 

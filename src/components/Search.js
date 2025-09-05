@@ -6,6 +6,8 @@ import {
     numberEl
 } from '../common.js';
 
+import renderError from './Error.js';
+
 const submitHandler = event => {
     event.preventDefault();
 
@@ -17,11 +19,7 @@ const submitHandler = event => {
     const forbiddenPattern = /[0-9]/;
     const patternMatch = forbiddenPattern.test(searchText);
     if (patternMatch) {
-        errorTextEl.textContent = "your search may not contain number";
-        errorEl.classList.add('error--visible');
-        setTimeout(() => {
-            errorEl.classList.remove('error--visible');
-        }, 3000);
+        renderError('Your search should not be number !');
         return;
     }
 
