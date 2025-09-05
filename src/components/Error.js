@@ -3,7 +3,7 @@ import {
     errorTextEl
 } from '../common.js';
 
-const renderError = message => {
+const renderError = (message = 'something went wrong :(') => {
     errorTextEl.textContent = message;
     errorEl.classList.add('error--visible');
     setTimeout(() => {
