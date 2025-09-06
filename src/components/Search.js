@@ -30,10 +30,12 @@ const submitHandler = event => {
 
     renderSpinner('search');
     // fetch('data.json');
-    fetch(`${BASE_API_URL}/jobs?search=${searchText}`)
+    fetch(`${BASE_API_URL}/232323232323232jobs?search=${searchText}`)
         .then(response => {
             if (!response.ok) {
-                console.log('something went wrong');
+                throw {
+                    message: 'Respone not exist'
+                }
             }
 
             return response.json();
@@ -48,6 +50,10 @@ const submitHandler = event => {
             renderjobList(jobItems);
 
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+            console.log(error.message);
+            renderSpinner('search');
+            renderError(error.message);
+        });
 };
 searchFormEl.addEventListener('submit', submitHandler);
