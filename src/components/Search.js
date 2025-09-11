@@ -10,7 +10,7 @@ import renderError from './Error.js';
 import renderSpinner from './Spinner.js';
 import renderjobList from './JobList.js';
 
-const submitHandler = event => {
+const submitHandler = async event => {
     event.preventDefault();
 
     jobListSearchEl.innerHTML = '';
@@ -29,31 +29,29 @@ const submitHandler = event => {
     searchInputEl.blur();
 
     renderSpinner('search');
-    // fetch('data.json');
-    fetch(`${BASE_API_URL}/232323232323232jobs?search=${searchText}`)
-        .then(response => {
-            if (!response.ok) {
-                throw {
-                    message: 'Respone not exist'
-                }
-            }
 
-            return response.json();
-        })
-        .then(data => {
-            // job items           
-            const { jobItems } = data;
-            numberEl.textContent = jobItems.length;
+    try {
+        const response = await fetch(`${BASE_API_URL}/dsdsdjobs?search=${searchText}`);
+        const data = await response.json();
 
-            renderSpinner('search');
+        //4xx 5xx
+        if(!response.ok)
+        {
+            throw new Error(data.description);
+        }
+        //گرفتن jobitems
+        const { jobItems } = data;
 
-            renderjobList(jobItems);
+        //پاک کردن اسپینر
+        renderSpinner('search');
 
-        })
-        .catch(error => {
-            console.log(error.message);
-            renderSpinner('search');
-            renderError(error.message);
-        });
+        numberEl.textContent = jobItems.length;
+
+        renderjobList(jobItems);
+    } catch (error) {
+        renderSpinner('search');
+        renderError(error.userError);
+        console.log(error.message);
+    }
 };
 searchFormEl.addEventListener('submit', submitHandler);
