@@ -31,7 +31,7 @@ const submitHandler = async event => {
     renderSpinner('search');
 
     try {
-        const response = await fetch(`${BASE_API_URL}/dsdsdjobs?search=${searchText}`);
+        const response = await fetch(`${BASE_API_URL}/jobs?search=${searchText}`);
         const data = await response.json();
 
         //4xx 5xx
