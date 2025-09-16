@@ -1,15 +1,16 @@
 import {
-    jobListSearchEl,
-    jobDetailsContentEl,
-    spinnerJobDetailsEl,
-    BASE_API_URL
-} from '../common.js';
-import renderSpinner from './Spinner.js';
-import renderJobDetailsHtml from './JobDetails.js';
+  jobListSearchEl,
+  jobDetailsContentEl,
+  spinnerJobDetailsEl,
+  BASE_API_URL,
+} from "../common.js";
+import renderSpinner from "./Spinner.js";
+import renderJobDetailsHtml from "./JobDetails.js";
+import renderError from "./Error.js";
 
-const renderjobList = jobItems => {
-    jobItems.slice(0, 7).forEach(jobItem => {
-        const jobItemHtml = `
+const renderjobList = (jobItems) => {
+  jobItems.slice(0, 7).forEach((jobItem) => {
+    const jobItemHtml = `
             <li class="job-item">
                         <a class="job-item__link" href="${jobItem.id}">
                             <div class="job-item__badge">${jobItem.badgeLetters}</div>
@@ -29,63 +30,58 @@ const renderjobList = jobItems => {
                         </a>
                     </li>
             `;
-        jobListSearchEl.insertAdjacentHTML('beforeend', jobItemHtml);
-    });
-}
+    jobListSearchEl.insertAdjacentHTML("beforeend", jobItemHtml);
+  });
+};
 
-const clickHandler = async event => {
-    event.preventDefault();
-    const jobItemEL = event.target.closest('.job-item');
+const clickHandler = async (event) => {
+  event.preventDefault();
+  const jobItemEL = event.target.closest(".job-item");
 
-    document.querySelector('.job-item--active')?.classList.remove('job-item--active');
-    jobItemEL.classList.add('job-item--active');
+  document
+    .querySelector(".job-item--active")
+    ?.classList.remove("job-item--active");
+  jobItemEL.classList.add("job-item--active");
 
-    jobDetailsContentEl.innerHTML = '';
-    spinnerJobDetailsEl.classList.add('spinner--visible');
+  jobDetailsContentEl.innerHTML = "";
+  spinnerJobDetailsEl.classList.add("spinner--visible");
 
-    const jobId = jobItemEL.children[0].getAttribute('href');
-    console.log(jobId);
-    
-    try {
-        const response = await fetch(`${BASE_API_URL}/jobs/${jobId}`);
+  const jobId = jobItemEL.children[0].getAttribute("href");
+  console.log(jobId);
+
+  try {
+    const response = await fetch(`${BASE_API_URL}/jobs/${jobId}`);
     const data = await response.json();
     if (!response.ok) {
-        throw new Error(data.description);      
+      throw new Error(data.description);
     }
     const { jobItem } = data;
-    renderSpinner('joblist');
+    renderSpinner("joblist");
     renderJobDetailsHtml(jobItem);
-    } catch {
-        renderSpinner('joblist');
-        renderError(error.userError);
-        console.log(error.message);
-    }
+  } catch (error) {
+    renderSpinner("joblist");
+    renderError(error.userError);
+    console.log(error.message);
+  }
 
-    
+  // fetch(`${BASE_API_URL}/jobs/${jobId}`)
+  //     .then(response => {
+  //         if (!response.ok) {
+  //             console.log('wrong');
+  //             return;
+  //         }
+  //         return response.json();
+  //     })
+  //     .then(data => {
+  //         const { jobItem } = data;
 
+  //         renderSpinner('joblist');
+  //         console.log(jobItem);
+  //         renderJobDetailsHtml(jobItem);
 
-
-
-
-    // fetch(`${BASE_API_URL}/jobs/${jobId}`)
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             console.log('wrong');
-    //             return;
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         const { jobItem } = data;
-
-    //         renderSpinner('joblist');
-    //         console.log(jobItem);
-    //         renderJobDetailsHtml(jobItem);
-
-
-    //     })
-    //     .catch(err => console.log(err));
+  //     })
+  //     .catch(err => console.log(err));
 };
-jobListSearchEl.addEventListener('click', clickHandler);
+jobListSearchEl.addEventListener("click", clickHandler);
 
 export default renderjobList;
