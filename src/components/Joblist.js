@@ -47,40 +47,24 @@ const clickHandler = async (event) => {
   spinnerJobDetailsEl.classList.add("spinner--visible");
 
   const jobId = jobItemEL.children[0].getAttribute("href");
-  console.log(jobId);
 
   try {
     const response = await fetch(`${BASE_API_URL}/jobs/${jobId}`);
     const data = await response.json();
+
     if (!response.ok) {
       throw new Error(data.description);
     }
+
     const { jobItem } = data;
+
     renderSpinner("joblist");
+
     renderJobDetailsHtml(jobItem);
   } catch (error) {
     renderSpinner("joblist");
     renderError(error.userError);
-    console.log(error.message);
   }
-
-  // fetch(`${BASE_API_URL}/jobs/${jobId}`)
-  //     .then(response => {
-  //         if (!response.ok) {
-  //             console.log('wrong');
-  //             return;
-  //         }
-  //         return response.json();
-  //     })
-  //     .then(data => {
-  //         const { jobItem } = data;
-
-  //         renderSpinner('joblist');
-  //         console.log(jobItem);
-  //         renderJobDetailsHtml(jobItem);
-
-  //     })
-  //     .catch(err => console.log(err));
 };
 jobListSearchEl.addEventListener("click", clickHandler);
 

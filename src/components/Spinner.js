@@ -1,11 +1,9 @@
-import {
-spinnerSearchEl,
-spinnerJobDetailsEl
-} from '../common.js';
+import { spinnerSearchEl, spinnerJobDetailsEl } from "../common.js";
 
-const renderSpinner = wichSpinner => {
-    const spinnerEL = wichSpinner === 'search' ? spinnerSearchEl : spinnerJobDetailsEl;
-    spinnerEL.classList.toggle('spinner--visible');
-}
+const renderSpinner = (wichSpinner) => {
+  const spinnerEL =
+    wichSpinner === "search" ? spinnerSearchEl : spinnerJobDetailsEl;
+  spinnerEL.classList.toggle("spinner--visible");
+};
 
 export default renderSpinner;
