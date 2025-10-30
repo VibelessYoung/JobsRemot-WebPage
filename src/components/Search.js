@@ -5,6 +5,7 @@ import {
   spinnerSearchEl,
   numberEl,
   BASE_API_URL,
+  getData,
 } from "../common.js";
 import renderError from "./Error.js";
 import renderSpinner from "./Spinner.js";
@@ -31,17 +32,11 @@ const submitHandler = async (event) => {
   renderSpinner("search");
 
   try {
-    const response = await fetch(`${BASE_API_URL}/jobs?search=${searchText}`);
-    const data = await response.json();
-
-    //4xx 5xx
-    if (!response.ok) {
-      throw new Error(data.description);
-    }
-    //گرفتن jobitems
+    const data = await getData(`${BASE_API_URL}/jobs?search=${searchText}`);
+    //jobitems
     const { jobItems } = data;
 
-    //پاک کردن اسپینر
+    //delete spinner
     renderSpinner("search");
 
     numberEl.textContent = jobItems.length;

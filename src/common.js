@@ -40,3 +40,13 @@ export const spinnerSearchEl = document.querySelector(".spinner--search");
 export const spinnerJobDetailsEl = document.querySelector(
   ".spinner--job-details"
 );
+//HELPER FUNCTION
+export const getData = async (URL) => {
+  const response = await fetch(URL);
+  const data = await response.json();
+  //4xx 5xx
+  if (!response.ok) {
+    throw new Error(data.description);
+  }
+  return data;
+};
