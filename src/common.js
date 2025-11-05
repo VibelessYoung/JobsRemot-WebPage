@@ -50,3 +50,7 @@ export const getData = async (URL) => {
   }
   return data;
 };
+//STATE
+export const state = {
+  searchJobItem: [],
+};

@@ -4,13 +4,14 @@ import {
   spinnerJobDetailsEl,
   BASE_API_URL,
   getData,
+  state,
 } from "../common.js";
 import renderSpinner from "./Spinner.js";
 import renderJobDetailsHtml from "./JobDetails.js";
 import renderError from "./Error.js";
 
-const renderjobList = (jobItems) => {
-  jobItems.slice(0, 7).forEach((jobItem) => {
+const renderjobList = () => {
+  state.searchJobItem.slice(0, 7).forEach((jobItem) => {
     const jobItemHtml = `
             <li class="job-item">
                         <a class="job-item__link" href="${jobItem.id}">

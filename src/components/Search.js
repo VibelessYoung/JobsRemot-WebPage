@@ -6,6 +6,7 @@ import {
   numberEl,
   BASE_API_URL,
   getData,
+  state,
 } from "../common.js";
 import renderError from "./Error.js";
 import renderSpinner from "./Spinner.js";
@@ -36,12 +37,15 @@ const submitHandler = async (event) => {
     //jobitems
     const { jobItems } = data;
 
+    //update state
+    state.searchJobItem = jobItems;
+
     //delete spinner
     renderSpinner("search");
 
     numberEl.textContent = jobItems.length;
 
-    renderjobList(jobItems);
+    renderjobList();
   } catch (error) {
     renderSpinner("search");
     renderError(error.userError);
