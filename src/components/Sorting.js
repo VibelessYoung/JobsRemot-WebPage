@@ -8,8 +8,12 @@ import {
 const clickHandler = (event) => {
   const clickedEL = event.target.closest(".sorting__button");
   if (!clickedEL) return;
-  const recent = clickedEL.className.include("--recent") ? true : false;
+  const recent = clickedEL.className.includes("--recent") ? true : false;
   if (recent) {
+    state.searchJobItem.sort((a, b) => {
+      return a.daysAgo - b.daysAgo;
+    });
+    console.log(state.searchJobItem);
   } else {
   }
 };
