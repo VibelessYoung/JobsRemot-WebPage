@@ -11,6 +11,7 @@ import renderJobDetailsHtml from "./JobDetails.js";
 import renderError from "./Error.js";
 
 const renderjobList = () => {
+  jobListSearchEl.innerHTML = "";
   state.searchJobItem.slice(0, 7).forEach((jobItem) => {
     const jobItemHtml = `
             <li class="job-item">
