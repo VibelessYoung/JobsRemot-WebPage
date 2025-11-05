@@ -10,6 +10,7 @@ const clickHandler = (event) => {
   const clickedEL = event.target.closest(".sorting__button");
   if (!clickedEL) return;
   const recent = clickedEL.className.includes("--recent") ? true : false;
+  //CHANGE BUTTONS ACTIVE STYLE
   if (recent) {
     sortingBtnRecentEl.classList.add("sorting__button--active");
     sortingBtnRelevantEl.classList.remove("sorting__button--active");
@@ -17,6 +18,7 @@ const clickHandler = (event) => {
     sortingBtnRecentEl.classList.remove("sorting__button--active");
     sortingBtnRelevantEl.classList.add("sorting__button--active");
   }
+  //SORTING
   if (recent) {
     state.searchJobItem.sort((a, b) => {
       return a.daysAgo - b.daysAgo;
