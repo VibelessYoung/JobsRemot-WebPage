@@ -7,6 +7,8 @@ import {
   BASE_API_URL,
   getData,
   state,
+  sortingBtnRecentEl,
+  sortingBtnRelevantEl,
 } from "../common.js";
 import renderError from "./Error.js";
 import renderSpinner from "./Spinner.js";
@@ -19,6 +21,10 @@ const submitHandler = async (event) => {
   jobListSearchEl.innerHTML = "";
   //get input search text
   const searchText = searchInputEl.value;
+
+  //reset sorting buttons
+  sortingBtnRecentEl.classList.remove("sorting__button--active");
+  sortingBtnRelevantEl.classList.add("sorting__button--active");
 
   //Validation
   const forbiddenPattern = /[0-9]/;
