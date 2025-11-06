@@ -53,4 +53,5 @@ export const getData = async (URL) => {
 //STATE
 export const state = {
   searchJobItem: [],
+  currentPage: 1,
 };

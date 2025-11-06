@@ -12,6 +12,7 @@ const pagingHandler = (event) => {
   const clickedButton = event.target.closest(".pagination__button");
   if (!clickedButton) return;
   const nextPage = clickedButton.className.includes("--next") ? true : false;
-  alert(nextPage);
+  nextPage ? state.currentPage++ : state.currentPage--;
+  renderjobList();
 };
 paginationEl.addEventListener("click", pagingHandler);
