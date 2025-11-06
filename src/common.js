@@ -54,4 +54,11 @@ export const getData = async (URL) => {
 export const state = {
   searchJobItem: [],
   currentPage: 1,
+  resultsPerPage: 7,
+};
+//PAGE HANDLER
+export const getJobsByPage = function () {
+  const start = (state.currentPage - 1) * state.resultsPerPage;
+  const end = state.currentPage * state.resultsPerPage;
+  return state.searchJobItem.slice(start, end);
 };
