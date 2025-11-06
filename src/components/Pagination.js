@@ -28,6 +28,8 @@ export const updatePaginationUI = () => {
     paginationBtnNextEl.classList.add("pagination__button--hidden");
     paginationNumberNextEl.textContent = "";
   }
+  paginationBtnBackEl.blur();
+  paginationBtnNextEl.blur();
 };
 
 const pagingHandler = (event) => {
