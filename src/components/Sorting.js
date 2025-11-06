@@ -5,10 +5,13 @@ import {
   state,
 } from "../common.js";
 import renderjobList from "./Joblist.js";
+import { updatePaginationUI } from "./Pagination.js";
 
 const clickHandler = (event) => {
   const clickedEL = event.target.closest(".sorting__button");
   if (!clickedEL) return;
+  state.currentPage = 1;
+  updatePaginationUI();
   const recent = clickedEL.className.includes("--recent") ? true : false;
   //CHANGE BUTTONS ACTIVE STYLE
   if (recent) {
