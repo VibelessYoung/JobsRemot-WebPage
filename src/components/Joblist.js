@@ -13,7 +13,6 @@ import renderError from "./Error.js";
 
 const renderjobList = () => {
   jobListSearchEl.innerHTML = "";
-
   const jobs = getJobsByPage();
 
   jobs.forEach((jobItem) => {

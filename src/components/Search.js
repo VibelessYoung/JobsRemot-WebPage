@@ -11,6 +11,7 @@ import {
 import renderError from "./Error.js";
 import renderSpinner from "./Spinner.js";
 import renderjobList from "./JobList.js";
+import { updatePaginationUI } from "./Pagination.js";
 
 const submitHandler = async (event) => {
   event.preventDefault();
@@ -40,12 +41,16 @@ const submitHandler = async (event) => {
     //update state
     state.searchJobItem = jobItems;
 
+    // Reset to first page
+    state.currentPage = 1;
+
     //delete spinner
     renderSpinner("search");
 
     numberEl.textContent = jobItems.length;
 
     renderjobList();
+    updatePaginationUI();
   } catch (error) {
     renderSpinner("search");
     renderError(error.userError);
