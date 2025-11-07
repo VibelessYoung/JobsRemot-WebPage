@@ -54,6 +54,8 @@ const clickHandler = async (event) => {
 
   const jobId = jobItemEL.children[0].getAttribute("href");
 
+  history.pushState(null, "", `/#${jobId}`);
+
   try {
     const data = await getData(`${BASE_API_URL}/jobs/${jobId}`);
 
