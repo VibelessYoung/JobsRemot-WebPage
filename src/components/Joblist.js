@@ -38,21 +38,29 @@ const renderjobList = () => {
     `;
     jobListSearchEl.insertAdjacentHTML("beforeend", jobItemHtml);
   });
+  if (state.activeJobId) {
+    const activeEl = jobListSearchEl
+      .querySelector(`.job-item__link[href="${state.activeJobId}"]`)
+      ?.closest(".job-item");
+    activeEl?.classList.add("job-item--active");
+  }
 };
 
 const clickHandler = async (event) => {
   event.preventDefault();
   const jobItemEL = event.target.closest(".job-item");
+  if (!jobItemEL) return;
 
   document
     .querySelector(".job-item--active")
     ?.classList.remove("job-item--active");
   jobItemEL.classList.add("job-item--active");
 
+  const jobId = jobItemEL.children[0].getAttribute("href");
+  state.activeJobId = jobId;
+
   jobDetailsContentEl.innerHTML = "";
   spinnerJobDetailsEl.classList.add("spinner--visible");
-
-  const jobId = jobItemEL.children[0].getAttribute("href");
 
   history.pushState(null, "", `/#${jobId}`);
 
