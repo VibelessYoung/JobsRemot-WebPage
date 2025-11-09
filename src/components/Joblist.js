@@ -56,11 +56,11 @@ const clickHandler = async (event) => {
     ?.classList.remove("job-item--active");
   jobItemEL.classList.add("job-item--active");
 
-  const jobId = jobItemEL.children[0].getAttribute("href");
-  state.activeJobId = jobId;
-
   jobDetailsContentEl.innerHTML = "";
   spinnerJobDetailsEl.classList.add("spinner--visible");
+
+  const jobId = jobItemEL.children[0].getAttribute("href");
+  state.activeJobId = jobId;
 
   history.pushState(null, "", `/#${jobId}`);
 
