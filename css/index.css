@@ -467,7 +467,7 @@ input {
   padding-left: 55px;
   padding-right: 15px;
   padding-bottom: 2px;
-  color: rgba(255, 255, 255, 0.95);
+  color: #000;
   caret-color: rgba(255, 255, 255, 0.7);
   background: rgba(255, 255, 255, 0.9);
   box-shadow: 0 8px 32px 0 #0d2626;
