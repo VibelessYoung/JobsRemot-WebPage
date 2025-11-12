@@ -9,6 +9,7 @@ import renderjobList from "./Joblist.js";
 const mouseEnterHandler = () => {
   bookmarksBtnEl.classList.add("bookmarks-btn--active");
   jobListBookmarksEl.classList.add("job-list--visible");
+  renderjobList("bookmarks");
 };
 
 const mouseLeaveHandler = () => {

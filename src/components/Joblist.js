@@ -6,13 +6,18 @@ import {
   getData,
   state,
   getJobsByPage,
+  jobListBookmarksEl,
 } from "../common.js";
 import renderSpinner from "./Spinner.js";
 import renderJobDetailsHtml from "./JobDetails.js";
 import renderError from "./Error.js";
 
-const renderjobList = () => {
-  jobListSearchEl.innerHTML = "";
+const renderjobList = (whichJobList = "search") => {
+  const joblsitEl =
+    whichJobList === "search" ? jobListSearchEl : jobListBookmarksEl;
+
+  joblsitEl.innerHTML = "";
+
   const jobs = getJobsByPage();
 
   jobs.forEach((jobItem) => {
@@ -36,7 +41,7 @@ const renderjobList = () => {
         </a>
       </li>
     `;
-    jobListSearchEl.insertAdjacentHTML("beforeend", jobItemHtml);
+    joblsitEl.insertAdjacentHTML("beforeend", jobItemHtml);
   });
   if (state.activeJobId) {
     const activeEl = jobListSearchEl
