@@ -87,6 +87,8 @@ const clickHandler = async (event) => {
 
     state.searchJobItem = jobItem;
 
+    //state.searchJobList = jobItems;
+
     renderSpinner("joblist");
 
     renderJobDetailsHtml(jobItem);

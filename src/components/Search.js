@@ -57,8 +57,8 @@ const submitHandler = async (event) => {
     numberEl.textContent = jobItems.length;
 
     renderjobList();
-    updatePaginationUI();
     markBookmarkedIcons();
+    updatePaginationUI();
   } catch (error) {
     renderSpinner("search");
     renderError(error.userError);
