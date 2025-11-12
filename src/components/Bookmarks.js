@@ -7,16 +7,19 @@ import {
 import renderjobList from "./Joblist.js";
 import renderError from "./Error.js";
 
-//POST TO LOCALSTORAGE
-const saveJob = state.searchJobItem;
-localStorage.setItem("savedjob", JSON.stringify(saveJob));
+function saveJobToLocalStorage(job) {
+  const savedJobs = JSON.parse(localStorage.getItem("savedjobs")) || [];
+  savedJobs.push(job);
+  localStorage.setItem("savedjobs", JSON.stringify(savedJobs));
+}
 
-//GET FRO LOCALSTORAGE
-const savedJobString = localStorage.getItem("savedjob");
-if (savedJobString) {
-  const savedjob = JSON.parse(savedJobString);
-} else {
-  renderError("you don't saved any job yet :(");
+function getJobFromLocalStorage() {
+  const savedJobString = localStorage.getItem("savedjob");
+  if (savedJobString) {
+    return JSON.parse(savedJobString);
+  } else {
+    return null;
+  }
 }
 
 const mouseEnterHandler = () => {
@@ -32,7 +35,13 @@ const mouseLeaveHandler = () => {
 
 const clickHandler = (event) => {
   if (!event.target.className.includes("bookmark")) return;
+
   state.bookmarkJobItems.push(state.activeJobId);
+
+  const currentJob = state.searchJobItem;
+
+  saveJobToLocalStorage(currentJob);
+
   document
     .querySelector(".job-info__bookmark-icon")
     .classList.toggle("job-info__bookmark-icon--bookmarked");

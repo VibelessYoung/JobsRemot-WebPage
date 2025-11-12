@@ -13,12 +13,22 @@ import renderJobDetailsHtml from "./JobDetails.js";
 import renderError from "./Error.js";
 
 const renderjobList = (whichJobList = "search") => {
-  const joblsitEl =
+  const jobListEl =
     whichJobList === "search" ? jobListSearchEl : jobListBookmarksEl;
 
-  joblsitEl.innerHTML = "";
+  jobListEl.innerHTML = "";
 
-  const jobs = getJobsByPage();
+  let jobs;
+  if (whichJobList === "search") {
+    jobs = getJobsByPage();
+  } else if (whichJobList === "bookmarks") {
+    const savedJobs = JSON.parse(localStorage.getItem("savedjobs")) || [];
+    jobs = savedJobs;
+  }
+
+  if (!jobs || jobs.length === 0) {
+    return;
+  }
 
   jobs.forEach((jobItem) => {
     const jobItemHtml = `
@@ -41,9 +51,10 @@ const renderjobList = (whichJobList = "search") => {
         </a>
       </li>
     `;
-    joblsitEl.insertAdjacentHTML("beforeend", jobItemHtml);
+    jobListEl.insertAdjacentHTML("beforeend", jobItemHtml);
   });
-  if (state.activeJobId) {
+
+  if (whichJobList === "search" && state.activeJobId) {
     const activeEl = jobListSearchEl
       .querySelector(`.job-item__link[href="${state.activeJobId}"]`)
       ?.closest(".job-item");
@@ -73,6 +84,8 @@ const clickHandler = async (event) => {
     const data = await getData(`${BASE_API_URL}/jobs/${jobId}`);
 
     const { jobItem } = data;
+
+    state.searchJobItem = jobItem;
 
     renderSpinner("joblist");
 
