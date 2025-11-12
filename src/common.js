@@ -55,7 +55,8 @@ export const state = {
   searchJobItem: [],
   currentPage: 1,
   resultsPerPage: 7,
-  activeJobId: [],
+  activeJobId: {},
+  bookmarkJobItems: [],
 };
 //PAGE HANDLER
 export const getJobsByPage = function () {
