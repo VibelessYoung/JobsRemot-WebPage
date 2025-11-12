@@ -5,6 +5,19 @@ import {
   jobListBookmarksEl,
 } from "../common.js";
 import renderjobList from "./Joblist.js";
+import renderError from "./Error.js";
+
+//POST TO LOCALSTORAGE
+const saveJob = state.searchJobItem;
+localStorage.setItem("savedjob", JSON.stringify(saveJob));
+
+//GET FRO LOCALSTORAGE
+const savedJobString = localStorage.getItem("savedjob");
+if (savedJobString) {
+  const savedjob = JSON.parse(savedJobString);
+} else {
+  renderError("you don't saved any job yet :(");
+}
 
 const mouseEnterHandler = () => {
   bookmarksBtnEl.classList.add("bookmarks-btn--active");
