@@ -14,6 +14,7 @@ import renderError from "./Error.js";
 import renderSpinner from "./Spinner.js";
 import renderjobList from "./JobList.js";
 import { updatePaginationUI } from "./Pagination.js";
+import { markBookmarkedIcons } from "./Bookmarks.js";
 
 const submitHandler = async (event) => {
   event.preventDefault();
@@ -57,6 +58,7 @@ const submitHandler = async (event) => {
 
     renderjobList();
     updatePaginationUI();
+    markBookmarkedIcons();
   } catch (error) {
     renderSpinner("search");
     renderError(error.userError);

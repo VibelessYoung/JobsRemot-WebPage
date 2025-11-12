@@ -8,9 +8,13 @@ import renderjobList from "./Joblist.js";
 import renderError from "./Error.js";
 
 function saveJobToLocalStorage(job) {
+  if (!job) return;
   const savedJobs = JSON.parse(localStorage.getItem("savedjobs")) || [];
-  savedJobs.push(job);
-  localStorage.setItem("savedjobs", JSON.stringify(savedJobs));
+  const exists = savedJobs.find((j) => j.id === job.id);
+  if (!exists) {
+    savedJobs.push(job);
+    localStorage.setItem("savedjobs", JSON.stringify(savedJobs));
+  }
 }
 
 function getJobFromLocalStorage() {
@@ -42,10 +46,41 @@ const clickHandler = (event) => {
 
   saveJobToLocalStorage(currentJob);
 
+  if (!state.bookmarkJobItems.includes(currentJob.id)) {
+    state.bookmarkJobItems.push(currentJob.id);
+    saveJobToLocalStorage(currentJob);
+  }
+
   document
     .querySelector(".job-info__bookmark-icon")
     .classList.toggle("job-info__bookmark-icon--bookmarked");
 };
+
+//SAVE BOOKMARK UI
+document.addEventListener("DOMContentLoaded", () => {
+  const savedJobs = JSON.parse(localStorage.getItem("savedjobs")) || [];
+
+  state.bookmarkJobItems = savedJobs.map((job) => job.id);
+
+  renderjobList("bookmarks");
+
+  markBookmarkedIcons();
+});
+
+export function markBookmarkedIcons() {
+  const jobItems = document.querySelectorAll(".job-item");
+  jobItems.forEach((item) => {
+    const link = item.querySelector(".job-item__link");
+    const jobId = link.getAttribute("href");
+    const bookmarkIcon = item.querySelector(".job-item__bookmark-icon");
+
+    if (state.bookmarkJobItems.includes(jobId)) {
+      bookmarkIcon.classList.add("job-info__bookmark-icon--bookmarked");
+    } else {
+      bookmarkIcon.classList.remove("job-info__bookmark-icon--bookmarked");
+    }
+  });
+}
 
 jobDetailsEl.addEventListener("click", clickHandler);
 bookmarksBtnEl.addEventListener("mouseenter", mouseEnterHandler);
