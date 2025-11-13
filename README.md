@@ -1,16 +1,30 @@
-# Job-Remot
+### 💼 Job-Remot
 
-یک صفحه وب برای جست و جوی شغل هست که به شما این امکان رو میده شغل مورد نظر رو خود را به راحتی پیدا کنید.
+A professional and elegant job search web app where you can easily find any job related to **programming**.
 
 ---
 
-# ویژگی ها
-- طراحی ساده و کاربر پسند
-- امکان جست و جوی شغل و دریافت اطلاعات آن
-- قابلیت صفحه بندی ، فیلتر کردن و . . .
+### 🚀 Features
+- 🧭 Simple and user-friendly design  
+- 🔍 Ability to search and filter jobs  
+- 📄 Pagination for better navigation  
+- ⚙️ Responsive layout across devices  
 
-  ---
+---
 
-  # نکته
+###  Screenshots
+<p align="center">
+  <img src="./img/test-1.png" width="30%"/>
+  <img src="./img/test-2.png" width="30%"/>
+  <img src="./img/test-3.png" width="30%"/>
+</p>
 
-  این پروژه هنوز در حال توسعه هست و منتظر فیچر های جدید اون باشید.
+---
+
+### ⚙️ Installation & Run
+
+  ```bash
+git clone https://github.com/VibelessYoung/JobsRemot.git
+cd JobsRemot
+npm install
+npm run dev
