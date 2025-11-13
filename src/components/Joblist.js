@@ -55,7 +55,11 @@ const renderjobList = (whichJobList = "search") => {
                                 </div>
                             </div>
                             <div class="job-item__right">
-                                <i class="fa-solid fa-bookmark job-item__bookmark-icon"></i>
+                                <i class="fa-solid fa-bookmark job-item__bookmark-icon ${
+                                  state.bookmarkJobItems.some(
+                                    (b) => b.id === jobItem.id
+                                  ) && "job-item__bookmark-icon--bookmarked"
+                                }"></i>
                                 <time class="job-item__time">${
                                   jobItem.daysAgo
                                 }d</time>
@@ -99,6 +103,7 @@ const clickHandler = async (event) => {
     renderError(error.userError);
   }
 };
+
 jobListSearchEl.addEventListener("click", clickHandler);
 jobListBookmarksEl.addEventListener("click", clickHandler);
 

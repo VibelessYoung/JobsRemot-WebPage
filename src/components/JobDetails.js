@@ -1,5 +1,4 @@
-import { jobDetailsContentEl, state } from "../common.js";
-import { saveBookmarkUI } from "./Bookmarks.js";
+import { jobDetailsContentEl } from "../common.js";
 
 const renderJobDetailsHtml = (jobItem) => {
   const detail = `
@@ -72,14 +71,6 @@ const renderJobDetailsHtml = (jobItem) => {
 </footer>
         `;
   jobDetailsContentEl.innerHTML = detail;
-
-  const bookmarkIcon = document.querySelector(".job-info__bookmark-icon");
-
-  if (state.bookmarkJobItems.some((b) => String(b.id) === String(jobItem.id))) {
-    bookmarkIcon.classList.add("job-info__bookmark-icon--bookmarked");
-  }
-
-  saveBookmarkUI();
 };
 
 export default renderJobDetailsHtml;
