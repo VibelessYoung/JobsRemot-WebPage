@@ -32,6 +32,19 @@ const clickHandler = (event) => {
     .classList.toggle("job-info__bookmark-icon--bookmarked");
 };
 
+//SAVE BOOKMARK
+export const saveBookmarkUI = () => {
+  if (
+    state.bookmarkJobItems.some(
+      (bookmark) => bookmark.id === state.activeJobItem.id
+    )
+  ) {
+    bookmarkIcon.classList.add("job-info__bookmark-icon--bookmarked");
+  } else {
+    bookmarkIcon.classList.remove("job-info__bookmark-icon--bookmarked");
+  }
+};
+
 const mouseEnterHandler = () => {
   bookmarksBtnEl.classList.add("bookmarks-btn--active");
   jobListBookmarksEl.classList.add("job-list--visible");
