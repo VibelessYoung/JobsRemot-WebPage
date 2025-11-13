@@ -68,8 +68,8 @@ const clickHandler = async (event) => {
   if (!jobItemEL) return;
 
   document
-    .querySelector(".job-item--active")
-    ?.classList.remove("job-item--active");
+    .querySelectorAll(".job-item--active")
+    .forEach((item) => item.classList.remove("job-item--active"));
   jobItemEL.classList.add("job-item--active");
 
   jobDetailsContentEl.innerHTML = "";
@@ -95,6 +95,8 @@ const clickHandler = async (event) => {
     renderError(error.userError);
   }
 };
+
 jobListSearchEl.addEventListener("click", clickHandler);
+jobListBookmarksEl.addEventListener("click", clickHandler);
 
 export default renderjobList;
