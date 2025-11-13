@@ -1,29 +1,27 @@
 import {
+  sortingBtnRecentEl,
+  sortingBtnRelevantEl,
   jobListSearchEl,
   searchInputEl,
   searchFormEl,
   spinnerSearchEl,
+  state,
   numberEl,
   BASE_API_URL,
   getData,
-  state,
-  sortingBtnRecentEl,
-  sortingBtnRelevantEl,
 } from "../common.js";
 import renderError from "./Error.js";
 import renderSpinner from "./Spinner.js";
 import renderjobList from "./JobList.js";
-import { updatePaginationUI } from "./Pagination.js";
-import { markBookmarkedIcons } from "./Bookmarks.js";
+import renderPagingBtn from "./Pagination.js";
 
 const submitHandler = async (event) => {
   event.preventDefault();
-
   jobListSearchEl.innerHTML = "";
   //get input search text
   const searchText = searchInputEl.value;
 
-  //reset sorting buttons
+  //Reset Sorting Btn
   sortingBtnRecentEl.classList.remove("sorting__button--active");
   sortingBtnRelevantEl.classList.add("sorting__button--active");
 
@@ -38,27 +36,25 @@ const submitHandler = async (event) => {
 
   searchInputEl.blur();
 
+  state.currentPage = 1;
+  renderPagingBtn();
+
   renderSpinner("search");
 
   try {
     const data = await getData(`${BASE_API_URL}/jobs?search=${searchText}`);
-    //jobitems
+    //GET JOB-ITEM
     const { jobItems } = data;
 
-    //update state
-    state.searchJobItem = jobItems;
+    //UPDATE STATE
+    state.searchJobItems = jobItems;
 
-    // Reset to first page
-    state.currentPage = 1;
-
-    //delete spinner
+    //DELETE SPINNER
     renderSpinner("search");
 
     numberEl.textContent = jobItems.length;
 
     renderjobList();
-    markBookmarkedIcons();
-    updatePaginationUI();
   } catch (error) {
     renderSpinner("search");
     renderError(error.userError);
