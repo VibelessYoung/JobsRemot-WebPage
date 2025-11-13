@@ -12,7 +12,7 @@ A professional and elegant job search web app where you can easily find any job 
 
 ---
 
-###  Screenshots
+### 🖼️ Screenshots
 <p align="center">
   <img src="./img/test-1.png" width="30%"/>
   <img src="./img/test-2.png" width="30%"/>
