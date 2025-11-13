@@ -40,20 +40,27 @@ const mouseLeaveHandler = () => {
 const clickHandler = (event) => {
   if (!event.target.className.includes("bookmark")) return;
 
-  state.bookmarkJobItems.push(state.activeJobId);
-
   const currentJob = state.searchJobItem;
+  const savedJobs = JSON.parse(localStorage.getItem("savedjobs")) || [];
+  const jobIndex = savedJobs.findIndex((j) => j.id === currentJob.id);
+  const bookmarkIcon = document.querySelector(".job-info__bookmark-icon");
 
-  saveJobToLocalStorage(currentJob);
-
-  if (!state.bookmarkJobItems.includes(currentJob.id)) {
+  if (jobIndex === -1) {
+    savedJobs.push(currentJob);
+    localStorage.setItem("savedjobs", JSON.stringify(savedJobs));
     state.bookmarkJobItems.push(currentJob.id);
-    saveJobToLocalStorage(currentJob);
+    bookmarkIcon.classList.add("job-info__bookmark-icon--bookmarked");
+  } else {
+    savedJobs.splice(jobIndex, 1);
+    localStorage.setItem("savedjobs", JSON.stringify(savedJobs));
+    state.bookmarkJobItems = state.bookmarkJobItems.filter(
+      (id) => id !== currentJob.id
+    );
+    bookmarkIcon.classList.remove("job-info__bookmark-icon--bookmarked");
   }
 
-  document
-    .querySelector(".job-info__bookmark-icon")
-    .classList.toggle("job-info__bookmark-icon--bookmarked");
+  renderjobList("bookmarks");
+  markBookmarkedIcons();
 };
 
 //SAVE BOOKMARK UI
@@ -65,14 +72,28 @@ document.addEventListener("DOMContentLoaded", () => {
   renderjobList("bookmarks");
 
   markBookmarkedIcons();
+
+  const bookmarkIcon = document.querySelector(".job-info__bookmark-icon");
+  if (
+    bookmarkIcon &&
+    state.activeJobId &&
+    state.bookmarkJobItems.includes(state.activeJobId)
+  ) {
+    bookmarkIcon.classList.add("job-info__bookmark-icon--bookmarked");
+  }
 });
 
 export function markBookmarkedIcons() {
   const jobItems = document.querySelectorAll(".job-item");
   jobItems.forEach((item) => {
     const link = item.querySelector(".job-item__link");
-    const jobId = link.getAttribute("href");
+    if (!link) return;
+
+    const href = link.getAttribute("href");
+    const jobId = href.replace(/^#/, "").trim();
+
     const bookmarkIcon = item.querySelector(".job-item__bookmark-icon");
+    if (!bookmarkIcon) return;
 
     if (state.bookmarkJobItems.includes(jobId)) {
       bookmarkIcon.classList.add("job-info__bookmark-icon--bookmarked");
