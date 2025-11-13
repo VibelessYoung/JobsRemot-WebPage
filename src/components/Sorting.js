@@ -1,3 +1,4 @@
+//IMPORT
 import {
   sortingBtnRecentEl,
   sortingBtnRelevantEl,
@@ -7,16 +8,23 @@ import {
 import renderjobList from "./JobList.js";
 import renderPagingBtn from "./Pagination.js";
 
+//CLICK HANDLING
 const clickHandler = (event) => {
+  //FIND SORTING BUTTONS
   const clickedButtonEL = event.target.closest(".sorting__button");
 
-  if (!clickedButtonEL) return;
+  if (!clickedButtonEL) return; //RETURN
 
+  //SET DEFAULT CURRENT PAGE'S NUMBER
   state.currentPage = 1;
+
+  //RENDER PAGING
   renderPagingBtn();
 
+  //FIND RECENT BUTTON
   const recent = clickedButtonEL.className.includes("--recent") ? true : false;
 
+  //SET CSS CLASSES
   if (recent) {
     sortingBtnRecentEl.classList.add("sorting__button--active");
     sortingBtnRelevantEl.classList.remove("sorting__button--active");
@@ -25,6 +33,7 @@ const clickHandler = (event) => {
     sortingBtnRelevantEl.classList.add("sorting__button--active");
   }
 
+  //SORTING
   if (recent) {
     state.searchJobItems.sort((a, b) => {
       return a.daysAgo - b.daysAgo;
@@ -34,6 +43,7 @@ const clickHandler = (event) => {
       return b.relevanceScore - a.relevanceScore;
     });
   }
+  //RENDER JOB LIST
   renderjobList();
 };
 

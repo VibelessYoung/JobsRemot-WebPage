@@ -1,5 +1,7 @@
+//IMPORT
 import { jobDetailsContentEl } from "../common.js";
 
+//RENDER JOB DETAILS
 const renderJobDetailsHtml = (jobItem) => {
   const detail = `
         
@@ -73,4 +75,5 @@ const renderJobDetailsHtml = (jobItem) => {
   jobDetailsContentEl.innerHTML = detail;
 };
 
+//EXPORT
 export default renderJobDetailsHtml;

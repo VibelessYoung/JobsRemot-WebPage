@@ -1,3 +1,4 @@
+//IMPORT
 import {
   jobListSearchEl,
   jobDetailsContentEl,
@@ -12,14 +13,18 @@ import renderSpinner from "./Spinner.js";
 import renderJobDetailsHtml from "./JobDetails.js";
 import renderError from "./Error.js";
 
+//RENDER JOB LIST
 const renderjobList = (whichJobList = "search") => {
+  //(SEARCH OR BOOKMARK) CHECK
   const jobListEl =
     whichJobList === "search" ? jobListSearchEl : jobListBookmarksEl;
 
+  //CLEAR JOB LIST
   jobListEl.innerHTML = "";
 
   let jobItems;
 
+  //CALCULATE
   if (whichJobList === "search") {
     jobItems = state.searchJobItems.slice(
       state.currentPage * ITEM_SIZE_PER_PAGE - ITEM_SIZE_PER_PAGE,
@@ -28,6 +33,8 @@ const renderjobList = (whichJobList = "search") => {
   } else {
     jobItems = state.bookmarkJobItems;
   }
+
+  //SHOW JOB LIST
   jobItems.forEach((jobItem) => {
     const jobItemHtml = `
             <li class="job-item ${
@@ -67,39 +74,57 @@ const renderjobList = (whichJobList = "search") => {
                         </a>
                     </li>
             `;
+
+    //ADD TO BEFORE-EDN
     jobListEl.insertAdjacentHTML("beforeend", jobItemHtml);
   });
 };
 
+//CLICK HANDLING
 const clickHandler = async (event) => {
+  //PREVENT
   event.preventDefault();
+
+  //FIND JOB ITEM
   const jobItemEL = event.target.closest(".job-item");
 
+  //SET CSS CLASSES
   document
     .querySelectorAll(".job-item--active")
     .forEach((item) => item.classList.remove("job-item--active"));
   jobItemEL.classList.add("job-item--active");
 
+  //CLEAR
   jobDetailsContentEl.innerHTML = "";
   spinnerJobDetailsEl.classList.add("spinner--visible");
 
+  //GET JOB ID
   const jobId = jobItemEL.children[0].getAttribute("href");
 
+  //GET ALL JOBS
   const allJobItems = [...state.searchJobItems, ...state.bookmarkJobItems];
+
+  //UPDATE STATE
   state.activeJobItem = allJobItems.find((jobItem) => jobItem.id === +jobId);
 
+  //FIX LINK
   history.pushState(null, "", `/#${jobId}`);
 
   try {
+    //GET DATA FROM API
     const data = await getData(`${BASE_API_URL}/jobs/${jobId}`);
 
     const { jobItem } = data;
 
+    //RENDER SPINNER
     renderSpinner("joblist");
 
+    //RENDER JOB DETAILS
     renderJobDetailsHtml(jobItem);
   } catch (error) {
+    //HIDE SPINNER
     renderSpinner("joblist");
+    //RENDER ERROR
     renderError(error.userError);
   }
 };
@@ -107,4 +132,5 @@ const clickHandler = async (event) => {
 jobListSearchEl.addEventListener("click", clickHandler);
 jobListBookmarksEl.addEventListener("click", clickHandler);
 
+//EXPORT
 export default renderjobList;

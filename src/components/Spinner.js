@@ -1,9 +1,12 @@
+//IMPORT
 import { spinnerSearchEl, spinnerJobDetailsEl } from "../common.js";
 
-const renderSpinner = (wichSpinner) => {
+//TOGGLE SPINNER
+const renderSpinner = (whichSpinner) => {
   const spinnerEL =
-    wichSpinner === "search" ? spinnerSearchEl : spinnerJobDetailsEl;
+    whichSpinner === "search" ? spinnerSearchEl : spinnerJobDetailsEl;
   spinnerEL.classList.toggle("spinner--visible");
 };
 
+//EXPORT
 export default renderSpinner;
