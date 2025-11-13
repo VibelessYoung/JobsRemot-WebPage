@@ -1,8 +1,8 @@
 import { spinnerSearchEl, spinnerJobDetailsEl } from "../common.js";
 
-const renderSpinner = (whichSpinner) => {
+const renderSpinner = (wichSpinner) => {
   const spinnerEL =
-    whichSpinner === "search" ? spinnerSearchEl : spinnerJobDetailsEl;
+    wichSpinner === "search" ? spinnerSearchEl : spinnerJobDetailsEl;
   spinnerEL.classList.toggle("spinner--visible");
 };
 

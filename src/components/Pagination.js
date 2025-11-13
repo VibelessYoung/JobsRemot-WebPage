@@ -1,49 +1,50 @@
 import {
   state,
-  paginationBtnNextEl,
+  paginationEl,
   paginationBtnBackEl,
+  paginationBtnNextEl,
   paginationNumberNextEl,
   paginationNumberBackEl,
-  paginationEl,
+  ITEM_SIZE_PER_PAGE,
 } from "../common.js";
 import renderjobList from "./JobList.js";
 
-export const updatePaginationUI = () => {
-  const totalPages = Math.ceil(
-    state.searchJobItem.length / state.resultsPerPage
-  );
-
-  if (state.currentPage > 1) {
+const renderPagingBtn = () => {
+  if (state.currentPage >= 2) {
     paginationBtnBackEl.classList.remove("pagination__button--hidden");
-    paginationNumberBackEl.textContent = state.currentPage - 1;
   } else {
     paginationBtnBackEl.classList.add("pagination__button--hidden");
-    paginationNumberBackEl.textContent = "";
   }
 
-  if (state.currentPage < totalPages) {
-    paginationBtnNextEl.classList.remove("pagination__button--hidden");
-    paginationNumberNextEl.textContent = state.currentPage + 1;
-  } else {
+  if (
+    state.searchJobItems.length - state.currentPage * ITEM_SIZE_PER_PAGE <=
+    0
+  ) {
     paginationBtnNextEl.classList.add("pagination__button--hidden");
-    paginationNumberNextEl.textContent = "";
+  } else {
+    paginationBtnNextEl.classList.remove("pagination__button--hidden");
   }
-  paginationBtnBackEl.blur();
+
+  paginationNumberNextEl.textContent = state.currentPage + 1;
+  paginationNumberBackEl.textContent = state.currentPage - 1;
+
   paginationBtnNextEl.blur();
+  paginationBtnBackEl.blur();
 };
 
 const pagingHandler = (event) => {
   const clickedButton = event.target.closest(".pagination__button");
+
   if (!clickedButton) return;
+
   const nextPage = clickedButton.className.includes("--next") ? true : false;
-  const totalPages = Math.ceil(
-    state.searchJobItem.length / state.resultsPerPage
-  );
 
-  if (nextPage && state.currentPage < totalPages) state.currentPage++;
-  else if (!nextPage && state.currentPage > 1) state.currentPage--;
+  nextPage ? state.currentPage++ : state.currentPage--;
 
+  renderPagingBtn();
   renderjobList();
-  updatePaginationUI();
 };
+
 paginationEl.addEventListener("click", pagingHandler);
+
+export default renderPagingBtn;
