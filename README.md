@@ -26,5 +26,3 @@ A professional and elegant job search web app where you can easily find any job 
   ```bash
 git clone https://github.com/VibelessYoung/JobsRemot.git
 cd JobsRemot
-npm install
-npm run dev
