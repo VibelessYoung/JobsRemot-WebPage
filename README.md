@@ -1,4 +1,4 @@
-### 💼 Job-Remot
+### 💼 Job-Remote
 
 A professional and elegant job search web app where you can easily find any job related to **programming**.
 
@@ -24,5 +24,5 @@ A professional and elegant job search web app where you can easily find any job 
 ### ⚙️ Installation & Run
 
   ```bash
-git clone https://github.com/VibelessYoung/JobsRemot.git
-cd JobsRemot
+git clone https://github.com/VibelessYoung/JobsRemote.git
+cd JobsRemote
